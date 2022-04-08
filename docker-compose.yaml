@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+
+    apache:
+        build: docker/apache/
+        ports: [ "80" ]
+        volumes:
+            - .:/var/www/html
+        networks:
+            - backend
+        depends_on:
+            - php
+
+    php:
+        build:
+            context: docker/php/
+            args:
+                - USERID=1000
+                - USERNAME=pickit
+        volumes:
+            - .:/var/www/html
+        networks:
+            - backend
+        depends_on:
+            - mysql
+        command: bash -c "composer install && php-fpm"
+
+    mysql:
+        image: mysql:8
+        command:
+            - --default-authentication-plugin=mysql_native_password
+        ports: [ "3306" ]
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: mechanic_service
+        volumes:
+            - mysql:/var/lib/mysql
+        networks:
+            - backend
+
+networks:
+    backend: ~
+
+volumes:
+    mysql: ~
