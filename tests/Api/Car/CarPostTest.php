@@ -70,4 +70,23 @@ class CarPostTest extends WebTestCase
             actual: $client->getResponse()->getContent()
         );
     }
+
+    public function testItShouldReturnParametersAreMissingError(): void
+    {
+        $client = static::createClient();
+        $client->request(
+            method: 'POST',
+            uri: '/cars',
+            content: '{
+                "uuid": "e32124f9-aff7-4d4e-a432-60ed436deab9",
+                "patent": "AB123CD"
+            }'
+        );
+
+        self::assertResponseStatusCodeSame(expectedCode: 400);
+        self::assertEquals(
+            expected: '{"code":400,"message":"Parameters are missing"}',
+            actual: $client->getResponse()->getContent()
+        );
+    }
 }
