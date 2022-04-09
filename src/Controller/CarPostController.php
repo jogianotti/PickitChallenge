@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\Car\CarCreator;
 use App\Domain\Car\Patent;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CarPostController extends AbstractController
 {
     #[Route('/cars', name: 'app_cars_post', methods: ['POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, CarCreator $carCreator): Response
     {
         $data = $request->toArray();
 
@@ -22,6 +23,15 @@ class CarPostController extends AbstractController
             $this->validateData($data);
             $uuid = new Uuid($data['uuid']);
             $patent = new Patent($data['patent']);
+
+            $carCreator(
+                uuid: $uuid,
+                brand: $data['brand'],
+                model: $data['model'],
+                year: (int)$data['year'],
+                patent: $patent,
+                color: $data['color']
+            );
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
