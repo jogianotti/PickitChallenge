@@ -9,7 +9,7 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
-class FindCarTest extends TestCase
+class CarFinderTest extends TestCase
 {
     private MockInterface|CarRepository $carRepository;
 

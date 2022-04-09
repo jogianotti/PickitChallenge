@@ -11,7 +11,7 @@ use Hamcrest\Matchers;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
-class CreateCarTest extends TestCase
+class CarCreatorTest extends TestCase
 {
     /** @doesNotPerformAssertions */
     public function testItShouldCreateACar(): void

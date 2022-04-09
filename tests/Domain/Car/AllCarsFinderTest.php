@@ -2,28 +2,28 @@
 
 namespace App\Tests\Domain\Car;
 
-use App\Domain\Car\CarDeleter;
+use App\Domain\Car\AllCarsFinder;
 use App\Domain\Car\CarRepository;
-use App\Domain\Shared\Uuid;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
-class DeleteCarTest extends TestCase
+class AllCarsFinderTest extends TestCase
 {
     private MockInterface|CarRepository $carRepository;
 
     /** @doesNotPerformAssertions */
-    public function testItShouldDeleteACar(): void
+    public function testItShouldFindAllCars(): void
     {
-        $uuid = new Uuid('5b897388-48c7-4c2a-a86e-2dedc22c908c');
+        $limit = 10;
+        $offset = 0;
 
         $this->carRepository
-            ->shouldReceive('delete')
-            ->with($uuid->value())
+            ->shouldReceive('all')
+            ->with($limit, $offset)
             ->once();
 
-        (new CarDeleter($this->carRepository))($uuid);
+        (new AllCarsFinder($this->carRepository))($limit, $offset);
     }
 
     protected function setUp(): void
