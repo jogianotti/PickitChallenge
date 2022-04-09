@@ -1,4 +1,7 @@
 {
+    "brick/math": {
+        "version": "0.9.3"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -90,6 +93,12 @@
     },
     "psr/log": {
         "version": "3.0.0"
+    },
+    "ramsey/collection": {
+        "version": "1.2.2"
+    },
+    "ramsey/uuid": {
+        "version": "4.3.1"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
