@@ -17,4 +17,11 @@ class CarMysqlRepository implements CarRepository
     {
         // TODO: Implement all() method.
     }
+
+    public function one(string $id): ?Car
+    {
+        // TODO: Implement one() method.
+
+        return null;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\Car\CarFinder;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,10 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class OneCarGetController extends AbstractController
 {
     #[Route('/cars/{id}', name: 'app_car_get', methods: ['GET'])]
-    public function index(string $id): Response
+    public function index(string $id, CarFinder $carFinder): Response
     {
         try {
             $uuid = new Uuid($id);
+
+            $car = $carFinder($uuid);
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
