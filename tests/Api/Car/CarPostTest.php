@@ -47,4 +47,27 @@ class CarPostTest extends WebTestCase
             actual: $client->getResponse()->getContent()
         );
     }
+
+    public function testItShouldReturnPatentError(): void
+    {
+        $client = static::createClient();
+        $client->request(
+            method: 'POST',
+            uri: '/cars',
+            content: '{
+                "uuid": "e32124f9-aff7-4d4e-a432-60ed436deab9",
+                "brand": "Citroen",
+                "model": "C4",
+                "year": 2011,
+                "patent": "E5D3G6S",
+                "color": "Rojo"
+            }'
+        );
+
+        self::assertResponseStatusCodeSame(expectedCode: 400);
+        self::assertEquals(
+            expected: '{"code":400,"message":"Invalid Patent"}',
+            actual: $client->getResponse()->getContent()
+        );
+    }
 }
