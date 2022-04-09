@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/console": "6.0.*",
@@ -20,6 +20,7 @@
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.0.*",
         "symfony/css-selector": "6.0.*",
+        "symfony/maker-bundle": "^1.38",
         "symfony/phpunit-bridge": "^6.0"
     },
     "config": {
