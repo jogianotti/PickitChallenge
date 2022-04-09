@@ -12,4 +12,9 @@ class CarMysqlRepository implements CarRepository
     {
         // TODO: Implement save() method.
     }
+
+    public function all(int $limit, int $offset): array
+    {
+        // TODO: Implement all() method.
+    }
 }
