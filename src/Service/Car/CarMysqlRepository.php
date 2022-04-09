@@ -24,4 +24,9 @@ class CarMysqlRepository implements CarRepository
 
         return null;
     }
+
+    public function delete(string $id): void
+    {
+        // TODO: Implement delete() method.
+    }
 }

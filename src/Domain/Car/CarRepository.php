@@ -9,4 +9,6 @@ interface CarRepository
     public function all(int $limit, int $offset): array;
 
     public function one(string $id): ?Car;
+
+    public function delete(string $id): void;
 }
