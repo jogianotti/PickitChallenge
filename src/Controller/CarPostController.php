@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\Car\Patent;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,7 @@ class CarPostController extends AbstractController
 
         try {
             $uuid = new Uuid($data['uuid']);
+            $patent = new Patent($data['patent']);
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
