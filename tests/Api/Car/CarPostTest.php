@@ -14,10 +14,10 @@ class CarPostTest extends WebTestCase
             uri: '/cars',
             content: '{
                 "uuid": "af4cbe9a-f218-4a27-801f-91ee04e0547c",
-                "marca": "Ford",
-                "modelo": "Ecosport",
-                "año": 2020,
-                "patente": "AV114XY",
+                "brand": "Ford",
+                "model": "Ecosport",
+                "year": 2020,
+                "patent": "AV114XY",
                 "color": "Gris"
             }'
         );
@@ -33,10 +33,10 @@ class CarPostTest extends WebTestCase
             uri: '/cars',
             content: '{
                 "uuid": "ee25f0a3",
-                "marca": "Renault",
-                "modelo": "Mégane",
-                "año": 2001,
-                "patente": "EDA536",
+                "brand": "Renault",
+                "model": "Mégane",
+                "year": 2001,
+                "patent": "EDA536",
                 "color": "Azul"
             }'
         );
