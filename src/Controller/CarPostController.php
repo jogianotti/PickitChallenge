@@ -19,6 +19,7 @@ class CarPostController extends AbstractController
         $data = $request->toArray();
 
         try {
+            $this->validateData($data);
             $uuid = new Uuid($data['uuid']);
             $patent = new Patent($data['patent']);
         } catch (InvalidArgumentException $exception) {
@@ -32,5 +33,31 @@ class CarPostController extends AbstractController
         }
 
         return new Response(status: Response::HTTP_OK);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function validateData(array $data): void
+    {
+        $parametersExists = isset(
+            $data['uuid'],
+            $data['brand'],
+            $data['model'],
+            $data['year'],
+            $data['patent'],
+            $data['color']
+        );
+
+        $parametersHasContent = !empty($data['uuid'])
+            && !empty($data['brand'])
+            && !empty($data['model'])
+            && !empty($data['year'])
+            && !empty($data['patent'])
+            && !empty($data['color']);
+
+        if (!$parametersExists || !$parametersHasContent) {
+            throw new InvalidArgumentException('Parameters are missing');
+        }
     }
 }
