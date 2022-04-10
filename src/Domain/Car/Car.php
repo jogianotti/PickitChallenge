@@ -3,14 +3,28 @@
 namespace App\Domain\Car;
 
 use App\Domain\Shared\Uuid;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: CarRepository::class)]
 class Car
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'string')]
     private string $uuid;
+
+    #[ORM\Column(type: 'string', length: 100)]
     private string $brand;
+
+    #[ORM\Column(type: 'string', length: 100)]
     private string $model;
+
+    #[ORM\Column(type: 'integer')]
     private int $year;
+
+    #[ORM\Column(type: 'string', length: 7)]
     private string $patent;
+
+    #[ORM\Column(type: 'string', length: 100)]
     private string $color;
 
     public static function create(
