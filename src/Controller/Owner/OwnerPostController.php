@@ -3,6 +3,7 @@
 namespace App\Controller\Owner;
 
 use App\Domain\Owner\Dni;
+use App\Domain\Owner\OwnerCreator;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OwnerPostController extends AbstractController
 {
     #[Route('/owners', name: 'app_owners_post', methods: ['POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, OwnerCreator $ownerCreator): Response
     {
         $data = $request->toArray();
 
@@ -22,6 +23,13 @@ class OwnerPostController extends AbstractController
             $this->validateData($data);
             $uuid = new Uuid($data['uuid']);
             $dni = new Dni($data['dni']);
+
+            $ownerCreator(
+                uuid: $uuid,
+                dni: $dni,
+                surname: $data['surname'],
+                name: $data['name']
+            );
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
