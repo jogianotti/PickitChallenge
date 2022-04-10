@@ -2,19 +2,41 @@
 
 namespace App\Tests\Api\Car;
 
+use App\Tests\Domain\Car\CarMother;
+use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CarDeleteTest extends WebTestCase
 {
     public function testItShouldDeleteOneCar(): void
     {
+        $car = CarMother::create();
+        $content = CarSerializer::toJson($car);
         $client = static::createClient();
+
+        $client->request(
+            method: 'POST',
+            uri: '/cars',
+            content: $content
+        );
+
         $client->request(
             method: 'DELETE',
-            uri: '/cars/b41ca9ae-fb3c-4a31-ba34-03531e04abe7'
+            uri: sprintf('/cars/%s', $car->uuid()->value())
         );
 
         self::assertResponseIsSuccessful();
+
+        $client->request(
+            method: 'GET',
+            uri: sprintf('/cars/%s', $car->uuid()->value())
+        );
+
+        self::assertResponseStatusCodeSame(expectedCode: 404);
+        self::assertEquals(
+            expected: '{"code":404,"message":"Car not found"}',
+            actual: $client->getResponse()->getContent()
+        );
     }
 
     public function testItShouldReturnInvalidUuidError(): void
