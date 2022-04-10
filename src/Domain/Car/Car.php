@@ -2,6 +2,7 @@
 
 namespace App\Domain\Car;
 
+use App\Domain\Owner\Owner;
 use App\Domain\Shared\Uuid;
 use App\Domain\Transaction\Transaction;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,6 +33,9 @@ class Car
 
     #[ORM\OneToMany(mappedBy: "car", targetEntity: Transaction::class)]
     private Collection $transactions;
+
+    #[ORM\ManyToOne(targetEntity: Owner::class, inversedBy: "cars")]
+    private Owner $owner;
 
     public static function create(
         Uuid $uuid,
