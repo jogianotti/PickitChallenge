@@ -2,6 +2,7 @@
 
 namespace App\Service\Transaction;
 
+use App\Domain\Car\Car;
 use App\Domain\Transaction\Transaction;
 use App\Domain\Transaction\TransactionRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -26,14 +27,21 @@ class TransactionMysqlRepository extends ServiceEntityRepository implements Tran
         $this->_em->flush();
     }
 
-    public function all(int $limit, int $offset): array
+    public function all(Car $car, int $limit, int $offset): array
     {
-        return $this->findBy(criteria: [], limit: $limit, offset: $offset);
+        return $this->findBy(
+            criteria: ['car' => $car->uuid()->value()],
+            limit: $limit,
+            offset: $offset
+        );
     }
 
-    public function one(string $id): ?Transaction
+    public function one(Car $car, string $id): ?Transaction
     {
-        return $this->find(id: $id);
+        return $this->findOneBy([
+            "car" => $car->uuid()->value(),
+            "id" => $id,
+        ]);
     }
 
     public function delete(Transaction $transaction): void
