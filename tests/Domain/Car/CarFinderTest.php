@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Car;
 
+use App\Domain\Car\Car;
 use App\Domain\Car\CarFinder;
 use App\Domain\Car\CarRepository;
 use App\Domain\Shared\Uuid;
@@ -21,7 +22,8 @@ class CarFinderTest extends TestCase
         $this->carRepository
             ->shouldReceive('one')
             ->with($uuid->value())
-            ->once();
+            ->once()
+            ->andReturn(new Car($uuid));
 
         (new CarFinder($this->carRepository))($uuid);
     }
