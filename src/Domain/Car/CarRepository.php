@@ -10,5 +10,5 @@ interface CarRepository
 
     public function one(string $id): ?Car;
 
-    public function delete(string $id): void;
+    public function delete(Car $car): void;
 }

@@ -2,8 +2,6 @@
 
 namespace App\Domain\Car;
 
-use App\Domain\Shared\Uuid;
-
 class CarDeleter
 {
     public function __construct(
@@ -11,8 +9,8 @@ class CarDeleter
     ) {
     }
 
-    public function __invoke(Uuid $uuid): void
+    public function __invoke(Car $car): void
     {
-        $this->carRepository->delete($uuid->value());
+        $this->carRepository->delete(car: $car);
     }
 }
