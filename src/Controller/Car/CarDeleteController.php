@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Car;
 
 use App\Domain\Car\CarDeleter;
 use App\Domain\Car\CarFinder;
