@@ -2,6 +2,7 @@
 
 namespace App\Domain\Car;
 
+use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\Uuid;
 
 class CarFinder
@@ -11,8 +12,17 @@ class CarFinder
     ) {
     }
 
-    public function __invoke(Uuid $uuid): ?Car
+    /**
+     * @throws EntityNotFoundException
+     */
+    public function __invoke(Uuid $uuid): Car
     {
-        return $this->carRepository->one($uuid->value());
+        $car = $this->carRepository->one($uuid->value());
+
+        if (!$car) {
+            throw new EntityNotFoundException('Car not found');
+        }
+
+        return $car;
     }
 }
