@@ -15,6 +15,8 @@ class CarMysqlRepository implements CarRepository
     public function all(int $limit, int $offset): array
     {
         // TODO: Implement all() method.
+
+        return [];
     }
 
     public function one(string $id): ?Car
