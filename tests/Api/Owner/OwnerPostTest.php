@@ -2,22 +2,22 @@
 
 namespace App\Tests\Api\Owner;
 
+use App\Tests\Domain\Owner\OwnerMother;
+use App\Tests\Domain\Owner\OwnerSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class OwnerPostTest extends WebTestCase
 {
     public function testItShouldPostAnOwner(): void
     {
+        $owner = OwnerMother::create();
+        $content = OwnerSerializer::toJson($owner);
+
         $client = static::createClient();
         $client->request(
             method: 'POST',
             uri: '/owners',
-            content: '{
-                "uuid": "af4cbe9a-f218-4a27-801f-91ee04e0547c",
-                "dni": "12345678",
-                "name": "Julia",
-                "surname": "Ruiz"
-            }'
+            content: $content
         );
 
         self::assertResponseIsSuccessful();
@@ -25,16 +25,14 @@ class OwnerPostTest extends WebTestCase
 
     public function testItShouldReturnUuidError(): void
     {
+        $owner = OwnerMother::create();
+        $content = OwnerSerializer::toJsonWithWrongUuid($owner);
+
         $client = static::createClient();
         $client->request(
             method: 'POST',
             uri: '/owners',
-            content: '{
-                "uuid": "af4cbe9a-f218",
-                "dni": "12345678",
-                "name": "Julia",
-                "surname": "Ruiz"
-            }'
+            content: $content
         );
 
         self::assertResponseStatusCodeSame(expectedCode: 400);
@@ -46,16 +44,14 @@ class OwnerPostTest extends WebTestCase
 
     public function testItShouldReturnDniError(): void
     {
+        $owner = OwnerMother::create();
+        $content = OwnerSerializer::toJsonWithWrongDni($owner);
+
         $client = static::createClient();
         $client->request(
             method: 'POST',
             uri: '/owners',
-            content: '{
-                "uuid": "7b49c246-0672-4a03-ab93-484954060478",
-                "dni": "ab123",
-                "name": "Julia",
-                "surname": "Ruiz"
-            }'
+            content: $content
         );
 
         self::assertResponseStatusCodeSame(expectedCode: 400);
@@ -67,13 +63,14 @@ class OwnerPostTest extends WebTestCase
 
     public function testItShouldReturnParametersAreMissingError(): void
     {
+        $owner = OwnerMother::create();
+        $content = OwnerSerializer::toJsonWithEmptyParameters($owner);
+
         $client = static::createClient();
         $client->request(
             method: 'POST',
             uri: '/owners',
-            content: '{
-                "uuid": "23e8fddc-ce49-45d6-8f4f-d1e0c68a8c52"
-            }'
+            content: $content
         );
 
         self::assertResponseStatusCodeSame(expectedCode: 400);
