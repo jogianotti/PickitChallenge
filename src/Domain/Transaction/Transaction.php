@@ -10,6 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {
+    public static array $availableServices = [
+        "Cambio de Aceite",
+        "Cambio de Filtro",
+        "Cambio de Correa",
+        "Revisión General",
+        "Pintura",
+        "Otro",
+    ];
+
     #[ORM\Id]
     #[ORM\Column(name: 'id', type: Types::STRING)]
     private string $uuid;
@@ -51,5 +60,15 @@ class Transaction
     public function setCar(Car $car): void
     {
         $this->car = $car;
+    }
+
+    public function total(): float
+    {
+        $total = 0.00;
+        foreach ($this->services as $service) {
+            $total += $service['price'];
+        }
+
+        return round($total, precision: 2);
     }
 }
