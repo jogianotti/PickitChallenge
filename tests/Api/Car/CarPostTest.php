@@ -11,7 +11,7 @@ class CarPostTest extends WebTestCase
     public function testItShouldPostCar(): void
     {
         $car = CarMother::create();
-        $content = CarSerializer::toJSON($car);
+        $content = CarSerializer::toJson($car);
 
         $client = static::createClient();
         $client->request(
