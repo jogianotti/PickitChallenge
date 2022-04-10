@@ -3,13 +3,15 @@
 namespace App\Domain\Car;
 
 use App\Domain\Shared\Uuid;
+use App\Domain\Transaction\Transaction;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
 class Car
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(name: 'id', type: 'string')]
     private string $uuid;
 
     #[ORM\Column(type: 'string', length: 100)]
@@ -26,6 +28,9 @@ class Car
 
     #[ORM\Column(type: 'string', length: 100)]
     private string $color;
+
+    #[ORM\OneToMany(mappedBy: "car", targetEntity: Transaction::class)]
+    private ArrayCollection $transactions;
 
     public static function create(
         Uuid $uuid,
@@ -48,6 +53,7 @@ class Car
     public function __construct(Uuid $uuid)
     {
         $this->uuid = $uuid->value();
+        $this->transactions = new ArrayCollection();
     }
 
     public function uuid(): Uuid
@@ -80,5 +86,8 @@ class Car
         return $this->color;
     }
 
-
+    public function addTransaction(Transaction $transaction)
+    {
+        $this->transactions->add($transaction);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Transaction;
 
+use App\Domain\Car\Car;
 use App\Domain\Shared\Uuid;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,11 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Transaction
 {
     #[ORM\Id]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(name: 'id', type: Types::STRING)]
     private string $uuid;
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $services;
+
+    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: "transactions")]
+    private Car $car;
 
     public function __construct(Uuid $uuid)
     {
@@ -37,5 +41,15 @@ class Transaction
     public function services(): array
     {
         return $this->services;
+    }
+
+    public function car(): ?Car
+    {
+        return $this->car;
+    }
+
+    public function setCar(Car $car): void
+    {
+        $this->car = $car;
     }
 }
