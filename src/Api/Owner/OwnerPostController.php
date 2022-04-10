@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Owner;
+namespace App\Api\Owner;
 
 use App\Domain\Owner\Dni;
 use App\Domain\Owner\OwnerCreator;

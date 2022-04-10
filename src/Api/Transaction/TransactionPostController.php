@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Transaction;
+namespace App\Api\Transaction;
 
 use App\Domain\Car\CarFinder;
 use App\Domain\Shared\EntityNotFoundException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Car;
+namespace App\Api\Car;
 
 use App\Domain\Car\CarCreator;
 use App\Domain\Car\Patent;

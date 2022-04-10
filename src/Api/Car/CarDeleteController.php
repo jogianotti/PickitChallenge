@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Controller\Car;
+namespace App\Api\Car;
 
+use App\Domain\Car\CarDeleter;
 use App\Domain\Car\CarFinder;
 use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
-use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OneCarGetController extends AbstractController
+class CarDeleteController extends AbstractController
 {
-    #[Route('/cars/{id}', name: 'app_car_get', methods: ['GET'])]
-    public function index(string $id, CarFinder $carFinder): Response
+    #[Route('/cars/{id}', name: 'app_car_delete', methods: ['DELETE'])]
+    public function index(string $id, CarFinder $carFinder, CarDeleter $carDeleter): Response
     {
         try {
-            $uuid = new Uuid($id);
-            $car = $carFinder($uuid);
+            $car = $carFinder(uuid: new Uuid($id));
 
-            return new JsonResponse(CarSerializer::toJson($car));
+            $carDeleter(car: $car);
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
@@ -39,5 +38,7 @@ class OneCarGetController extends AbstractController
                 status: Response::HTTP_NOT_FOUND
             );
         }
+
+        return new Response();
     }
 }

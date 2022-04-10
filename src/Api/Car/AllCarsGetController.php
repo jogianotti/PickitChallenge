@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Car;
+namespace App\Api\Car;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
