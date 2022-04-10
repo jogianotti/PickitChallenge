@@ -6,7 +6,7 @@ use App\Domain\Car\Car;
 
 final class CarSerializer
 {
-    public static function toJSON(Car $car): string
+    public static function toJson(Car $car): string
     {
         return self::loadData(
             $car->uuid()->value(),
