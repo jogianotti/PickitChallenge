@@ -42,6 +42,15 @@ final class CarSerializer
         );
     }
 
+    public static function arrayToJson(array $cars): string
+    {
+        $serialized = [];
+        foreach ($cars as $car) {
+            $serialized[] = self::toJson($car);
+        }
+
+        return sprintf('[ %s ]', implode(', ', $serialized));
+    }
 
     private static function loadData(
         string $uuid,
