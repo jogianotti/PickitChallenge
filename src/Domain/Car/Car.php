@@ -5,6 +5,7 @@ namespace App\Domain\Car;
 use App\Domain\Shared\Uuid;
 use App\Domain\Transaction\Transaction;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
@@ -30,7 +31,7 @@ class Car
     private string $color;
 
     #[ORM\OneToMany(mappedBy: "car", targetEntity: Transaction::class)]
-    private ArrayCollection $transactions;
+    private Collection $transactions;
 
     public static function create(
         Uuid $uuid,
