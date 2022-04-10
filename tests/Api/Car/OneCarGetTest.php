@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class OneCarGetTest extends WebTestCase
 {
-    public function testItShouldGetAllCars(): void
+    public function testItShouldGetACar(): void
     {
         $client = static::createClient();
         $client->request(
