@@ -2,16 +2,28 @@
 
 namespace App\Tests\Api\Car;
 
+use App\Tests\Domain\Car\CarMother;
+use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class OneCarGetTest extends WebTestCase
 {
     public function testItShouldGetACar(): void
     {
+        $car = CarMother::create();
+        $content = CarSerializer::toJson($car);
+
         $client = static::createClient();
+
+        $client->request(
+            method: 'POST',
+            uri: '/cars',
+            content: $content
+        );
+
         $client->request(
             method: 'GET',
-            uri: '/cars/89d2ff49-2f03-4241-b186-12c5c5ea1c43'
+            uri: sprintf('/cars/%s', $car->uuid()->value())
         );
 
         self::assertResponseIsSuccessful();

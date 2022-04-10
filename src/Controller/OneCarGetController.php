@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Domain\Car\CarFinder;
+use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
+use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +19,9 @@ class OneCarGetController extends AbstractController
     {
         try {
             $uuid = new Uuid($id);
-
             $car = $carFinder($uuid);
+
+            return new JsonResponse(CarSerializer::toJson($car));
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
@@ -27,8 +30,14 @@ class OneCarGetController extends AbstractController
                 ],
                 status: Response::HTTP_BAD_REQUEST
             );
+        } catch (EntityNotFoundException $exception) {
+            return new JsonResponse(
+                data: [
+                    "code" => Response::HTTP_NOT_FOUND,
+                    "message" => $exception->getMessage(),
+                ],
+                status: Response::HTTP_NOT_FOUND
+            );
         }
-
-        return new JsonResponse([]);
     }
 }
