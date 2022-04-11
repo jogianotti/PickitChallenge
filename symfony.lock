@@ -98,6 +98,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "pelmered/fake-car": {
+        "version": "1.7"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },

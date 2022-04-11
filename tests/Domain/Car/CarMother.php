@@ -7,6 +7,7 @@ use App\Domain\Car\Patent;
 use App\Domain\Shared\Uuid;
 use Faker\Factory;
 use Faker\Generator;
+use Faker\Provider\Fakecar;
 
 final class CarMother
 {
@@ -16,8 +17,8 @@ final class CarMother
     {
         return Car::create(
             uuid: new Uuid(self::generator()->uuid()),
-            brand: self::generator()->word(),
-            model: self::generator()->word(),
+            brand: self::generator()->vehicleBrand(),
+            model: self::generator()->vehicleModel(),
             year: (int)self::generator()->year(),
             patent: new Patent(self::generator()->regexify('[A-Z]{2}[0-9]{3}[A-Z]{2}')),
             color: self::generator()->colorName(),
@@ -26,6 +27,9 @@ final class CarMother
 
     public static function generator(): Generator
     {
-        return self::$generator = self::$generator ?? Factory::create();
+        $faker = Factory::create();
+        $faker->addProvider(new Fakecar($faker));
+
+        return self::$generator = self::$generator ?? $faker;
     }
 }
