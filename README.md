@@ -1,9 +1,15 @@
 # Pickit Challenge
 
 ## Docker deploy
+Used versions
+```text
+Docker: 20.10.7
+Docker Compose: 1.27.4
+```
+
 
 Create docker-compose.override.yaml file to set a free port.
-```shell
+```yaml
 # file: docker-compose.override.yaml
 
 version: '3'
