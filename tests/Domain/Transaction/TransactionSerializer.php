@@ -44,4 +44,14 @@ class TransactionSerializer
 
         return sprintf($json, $uuid, json_encode($services));
     }
+
+    public static function arrayToJson(array $transactions): string
+    {
+        $serialized = [];
+        foreach ($transactions as $transaction) {
+            $serialized[] = self::toJson($transaction);
+        }
+
+        return sprintf('[ %s ]', implode(', ', $serialized));
+    }
 }
