@@ -130,4 +130,11 @@ class Car
 
         return $this;
     }
+
+    public function setOwner(Owner $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
 }
