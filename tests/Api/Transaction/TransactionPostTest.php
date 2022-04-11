@@ -157,4 +157,36 @@ class TransactionPostTest extends WebTestCase
             actual: $client->getResponse()->getContent()
         );
     }
+
+    public function testItShouldReturnPaintServiceOnGreyCarError(): void
+    {
+        $client = static::createClient();
+
+        $car = CarMother::create();
+        $car->setColor('Gris');
+        $content = CarSerializer::toJson($car);
+
+        $client->request(
+            method: 'POST',
+            uri: '/cars',
+            content: $content
+        );
+
+        self::assertResponseIsSuccessful();
+
+        $transaction = TransactionMother::createWithPaintService();
+        $content = TransactionSerializer::toJson($transaction);
+
+        $client->request(
+            method: 'POST',
+            uri: sprintf('/cars/%s/transactions', $car->uuid()->value()),
+            content: $content
+        );
+
+        self::assertResponseStatusCodeSame(expectedCode: 400);
+        self::assertEquals(
+            expected: '{"code":400,"message":"Service not allowed"}',
+            actual: $client->getResponse()->getContent()
+        );
+    }
 }
