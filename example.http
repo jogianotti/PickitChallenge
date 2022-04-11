@@ -1,0 +1,91 @@
+# Use case: Register a car
+POST http://localhost:8080/index.php/cars
+Content-Type: application/json
+
+{
+  "uuid": "34d08fb6-9af3-4a96-90b0-8e98aa299b0f",
+  "brand": "Ford",
+  "model": "Focus",
+  "year": 2021,
+  "patent": "AB123CD",
+  "color": "Azul"
+}
+
+###
+
+# Use case: Update a car
+PUT http://localhost:8080/index.php/cars/34d08fb6-9af3-4a96-90b0-8e98aa299b0f
+Content-Type: application/json
+
+{
+  "brand": "Ford",
+  "model": "Focus",
+  "year": 2015,
+  "patent": "DC321BA",
+  "color": "Verde"
+}
+
+###
+
+# Use case: Register an owner
+POST http://localhost:8080/index.php/owners
+Content-Type: application/json
+
+{
+  "uuid": "799d370f-4c66-4a88-a8ef-973f29ffc1f1",
+  "dni": "12345678",
+  "surname": "Perez",
+  "name": "Eusebia"
+}
+
+###
+
+# Use case: Set car owner
+PUT http://localhost:8080/index.php/cars/34d08fb6-9af3-4a96-90b0-8e98aa299b0f/owner/799d370f-4c66-4a88-a8ef-973f29ffc1f1
+
+###
+
+# Use case: Get all cars with owner
+#
+# Get all cars. Accept limit and offset.
+# By default limit = 10 and offset = 0
+GET http://localhost:8080/index.php/cars
+Accept: application/json
+
+###
+
+GET http://localhost:8080/index.php/cars?limit=5&offset=0
+Accept: application/json
+
+###
+
+# Use case: Get one car with owner
+GET http://localhost:8080/index.php/cars/34d08fb6-9af3-4a96-90b0-8e98aa299b0f
+Accept: application/json
+
+###
+
+# Use case: Register transaction
+POST http://localhost:8080/index.php/cars/34d08fb6-9af3-4a96-90b0-8e98aa299b0f/transactions
+Content-Type: application/json
+
+{
+  "uuid": "78da0efc-405b-4477-9e33-e296a321cd5a",
+  "services": [
+    {
+      "service": "Cambio de Aceite",
+      "price": 5467.00
+    },
+    {
+      "service": "Revisión General",
+      "price": 3000.00
+    }
+  ]
+}
+
+###
+
+# Use case: Delete one car
+DELETE http://localhost:8080/index.php/cars/34d08fb6-9af3-4a96-90b0-8e98aa299b0f
+
+###
