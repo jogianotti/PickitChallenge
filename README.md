@@ -2,7 +2,7 @@
 
 ## Docker deploy
 
-Create docker-compose.override.yaml file to override apache service definition.
+Create docker-compose.override.yaml file to set a free port.
 ```shell
 # file: docker-compose.override.yaml
 
