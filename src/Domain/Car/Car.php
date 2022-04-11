@@ -137,4 +137,9 @@ class Car
 
         return $this;
     }
+
+    public function canApply(string $service): bool
+    {
+        return $this->color !== 'Gris' || $service !== 'Pintura';
+    }
 }

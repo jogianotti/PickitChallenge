@@ -2,6 +2,7 @@
 
 namespace App\Api\Transaction;
 
+use App\Domain\Car\Car;
 use App\Domain\Car\CarFinder;
 use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\InvalidArgumentException;
@@ -27,9 +28,9 @@ class TransactionPostController extends AbstractController
 
         try {
             $this->validateData($data);
-            $this->validateServices($data['services']);
             $uuid = new Uuid($data['uuid']);
             $car = $carFinder(new Uuid($id));
+            $this->validateServices($car, $data['services']);
 
             $transaction = $transactionCreator(
                 car: $car,
@@ -75,13 +76,16 @@ class TransactionPostController extends AbstractController
     /**
      * @throws InvalidArgumentException
      */
-    private function validateServices(array $services): void
+    private function validateServices(Car $car, array $services): void
     {
         foreach ($services as $service) {
             $valid = in_array($service['service'], Transaction::$availableServices, strict: true);
-
             if (!$valid) {
                 throw new InvalidArgumentException('Invalid services');
+            }
+
+            if (!$car->canApply($service['service'])) {
+                throw new InvalidArgumentException('Service not allowed');
             }
         }
     }

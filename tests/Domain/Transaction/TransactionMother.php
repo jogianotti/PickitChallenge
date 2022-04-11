@@ -30,6 +30,19 @@ class TransactionMother
         );
     }
 
+    public static function createWithPaintService(): Transaction
+    {
+        $services[] = [
+            "service" => 'Pintura',
+            "price" => self::generator()->randomFloat(2, min: 5000, max: 100000),
+        ];
+
+        return Transaction::create(
+            id: new Uuid(self::generator()->uuid()),
+            services: $services
+        );
+    }
+
     public static function generator(): Generator
     {
         return self::$generator = self::$generator ?? Factory::create();
