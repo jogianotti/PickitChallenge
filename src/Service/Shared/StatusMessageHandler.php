@@ -9,12 +9,12 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class StatusMessageHandler
 {
-    public function __construct(private LoggerInterface $logger)
+    public function __construct(private LoggerInterface $eventsLogger)
     {
     }
 
     public function __invoke(StatusMessage $message)
     {
-        $this->logger->info($message->status());
+        $this->eventsLogger->info($message->status());
     }
 }
