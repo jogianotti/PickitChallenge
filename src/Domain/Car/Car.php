@@ -37,6 +37,9 @@ class Car
     #[ORM\ManyToOne(targetEntity: Owner::class, inversedBy: "cars")]
     private Owner $owner;
 
+    #[ORM\Column(type: 'string', name: 'owner_full_name', nullable: true)]
+    private ?string $ownerFullName = null;
+
     public static function create(
         Uuid $uuid,
         string $brand,
@@ -91,6 +94,11 @@ class Car
         return $this->color;
     }
 
+    public function ownerFullName(): string
+    {
+        return $this->ownerFullName ?? '';
+    }
+
     public function addTransaction(Transaction $transaction)
     {
         $this->transactions->add($transaction);
@@ -134,6 +142,7 @@ class Car
     public function setOwner(Owner $owner): self
     {
         $this->owner = $owner;
+        $this->ownerFullName = $owner->fullName();
 
         return $this;
     }

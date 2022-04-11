@@ -65,4 +65,9 @@ class Owner
     {
         return $this->name;
     }
+
+    public function fullName(): string
+    {
+        return "$this->surname $this->name";
+    }
 }

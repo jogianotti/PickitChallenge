@@ -14,7 +14,8 @@ final class CarSerializer
             $car->model(),
             $car->year(),
             $car->patent()->value(),
-            $car->color()
+            $car->color(),
+            $car->ownerFullName()
         );
     }
 
@@ -26,7 +27,8 @@ final class CarSerializer
             $car->model(),
             $car->year(),
             $car->patent()->value(),
-            $car->color()
+            $car->color(),
+            $car->ownerFullName()
         );
     }
 
@@ -38,7 +40,8 @@ final class CarSerializer
             $car->model(),
             $car->year(),
             '232323',
-            $car->color()
+            $car->color(),
+            $car->ownerFullName()
         );
     }
 
@@ -58,11 +61,12 @@ final class CarSerializer
         string $model,
         int $year,
         string $patent,
-        string $color
+        string $color,
+        string $ownerFullName
     ): string {
-        $json = '{ "uuid": "%s", "brand": "%s", "model": "%s", "year": %s, "patent": "%s", "color": "%s" }';
+        $json = '{ "uuid": "%s", "brand": "%s", "model": "%s", "year": %s, "patent": "%s", "color": "%s", "owner": "%s" }';
 
-        return sprintf($json, $uuid, $brand, $model, $year, $patent, $color);
+        return sprintf($json, $uuid, $brand, $model, $year, $patent, $color, $ownerFullName);
     }
 
     public static function toArray(Car $car): array

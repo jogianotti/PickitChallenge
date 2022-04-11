@@ -19,12 +19,12 @@ class CarDeleteTest extends WebTestCase
             uri: '/cars',
             content: $content
         );
+        self::assertResponseIsSuccessful();
 
         $client->request(
             method: 'DELETE',
             uri: sprintf('/cars/%s', $car->uuid()->value())
         );
-
         self::assertResponseIsSuccessful();
 
         $client->request(
