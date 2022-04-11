@@ -3,11 +3,13 @@
 namespace App\Domain\Car;
 
 use App\Domain\Shared\Uuid;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class CarCreator
 {
     public function __construct(
-        private CarRepository $carRepository
+        private CarRepository $carRepository,
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -29,5 +31,7 @@ class CarCreator
         );
 
         $this->carRepository->save($car);
+
+        $this->messageBus->dispatch(new CreatedCarMessage(id: $uuid));
     }
 }

@@ -4,11 +4,13 @@ namespace App\Domain\Car;
 
 use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\Uuid;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class  CarUpdater
 {
     public function __construct(
-        private CarRepository $carRepository
+        private CarRepository $carRepository,
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -33,5 +35,7 @@ class  CarUpdater
             ->setYear($year);
 
         $this->carRepository->save($car);
+
+        $this->messageBus->dispatch(new UpdatedCarMessage(id: $uuid));
     }
 }

@@ -2,12 +2,16 @@
 
 namespace App\Tests\Domain\Car;
 
+use App\Domain\Car\CarOwnerAddedMessage;
 use App\Domain\Car\CarOwnerSetter;
 use App\Domain\Car\CarRepository;
 use App\Domain\Owner\OwnerRepository;
 use App\Tests\Domain\Owner\OwnerMother;
+use Hamcrest\Matchers;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class CarOwnerSetterTest extends TestCase
 {
@@ -36,13 +40,26 @@ class CarOwnerSetterTest extends TestCase
             ->with($car)
             ->once();
 
-        (new CarOwnerSetter($this->carRepository, $this->ownerRepository))($car->uuid(), $owner->uuid());
+        $message = new CarOwnerAddedMessage(ownerId: $owner->uuid(), carId: $car->uuid());
+        $this->messageBus
+            ->shouldReceive('dispatch')
+            ->with(Matchers::equalTo($message))
+            ->once()
+            ->andReturn(new Envelope($message));
+
+        (new CarOwnerSetter(
+            $this->carRepository, $this->ownerRepository, $this->messageBus
+        ))(
+            $car->uuid(),
+            $owner->uuid()
+        );
     }
 
     protected function setUp(): void
     {
         $this->carRepository = Mockery::mock(CarRepository::class);
         $this->ownerRepository = Mockery::mock(OwnerRepository::class);
+        $this->messageBus = Mockery::mock(MessageBusInterface::class);
     }
 
     protected function tearDown(): void

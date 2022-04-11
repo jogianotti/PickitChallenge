@@ -5,11 +5,14 @@ namespace App\Tests\Domain\Car;
 use App\Domain\Car\Car;
 use App\Domain\Car\CarCreator;
 use App\Domain\Car\CarRepository;
+use App\Domain\Car\CreatedCarMessage;
 use App\Domain\Car\Patent;
 use App\Domain\Shared\Uuid;
 use Hamcrest\Matchers;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class CarCreatorTest extends TestCase
 {
@@ -37,12 +40,20 @@ class CarCreatorTest extends TestCase
             ->with(Matchers::equalTo($car))
             ->once();
 
-        (new CarCreator($this->carRepository))($uuid, $brand, $model, $year, $patent, $color);
+        $message = new CreatedCarMessage(id: $uuid);
+        $this->messageBus
+            ->shouldReceive('dispatch')
+            ->with(Matchers::equalTo($message))
+            ->once()
+            ->andReturn(new Envelope($message));
+
+        (new CarCreator($this->carRepository, $this->messageBus))($uuid, $brand, $model, $year, $patent, $color);
     }
 
     protected function setUp(): void
     {
         $this->carRepository = Mockery::mock(CarRepository::class);
+        $this->messageBus = Mockery::mock(MessageBusInterface::class);
     }
 
     protected function tearDown(): void
