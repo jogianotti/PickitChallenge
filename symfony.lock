@@ -92,6 +92,9 @@
     "mockery/mockery": {
         "version": "1.5.0"
     },
+    "monolog/monolog": {
+        "version": "2.5.0"
+    },
     "myclabs/deep-copy": {
         "version": "1.11.0"
     },
@@ -327,6 +330,21 @@
         },
         "files": [
             "config/packages/messenger.yaml"
+        ]
+    },
+    "symfony/monolog-bridge": {
+        "version": "v6.0.3"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.7",
+            "ref": "213676c4ec929f046dfde5ea8e97625b81bc0578"
+        },
+        "files": [
+            "config/packages/monolog.yaml"
         ]
     },
     "symfony/phpunit-bridge": {
