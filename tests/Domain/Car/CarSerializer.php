@@ -64,4 +64,9 @@ final class CarSerializer
 
         return sprintf($json, $uuid, $brand, $model, $year, $patent, $color);
     }
+
+    public static function toArray(Car $car): array
+    {
+        return json_decode(self::toJson($car), associative: true);
+    }
 }
