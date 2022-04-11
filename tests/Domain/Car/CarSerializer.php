@@ -42,14 +42,14 @@ final class CarSerializer
         );
     }
 
-    public static function arrayToJson(array $cars): string
+    public static function array(array $cars): array
     {
-        $serialized = [];
+        $mapped = [];
         foreach ($cars as $car) {
-            $serialized[] = self::toJson($car);
+            $mapped[] = self::toArray($car);
         }
 
-        return sprintf('[ %s ]', implode(', ', $serialized));
+        return $mapped;
     }
 
     private static function loadData(

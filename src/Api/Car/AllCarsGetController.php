@@ -20,6 +20,6 @@ class AllCarsGetController extends AbstractController
 
         $cars = $allCarsFinder($limit, $offset);
 
-        return new JsonResponse(CarSerializer::arrayToJson($cars));
+        return new JsonResponse(CarSerializer::array($cars));
     }
 }
