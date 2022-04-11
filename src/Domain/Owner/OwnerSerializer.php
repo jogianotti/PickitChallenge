@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Owner;
-
-use App\Domain\Owner\Owner;
+namespace App\Domain\Owner;
 
 class OwnerSerializer
 {

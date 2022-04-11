@@ -2,8 +2,8 @@
 
 namespace App\Tests\Api\Car;
 
+use App\Domain\Car\CarSerializer;
 use App\Tests\Domain\Car\CarMother;
-use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CarPutTest extends WebTestCase
@@ -40,7 +40,7 @@ class CarPutTest extends WebTestCase
         self::assertJson($client->getResponse()->getContent());
 
         $response = json_decode($client->getResponse()->getContent(), associative: true);
-        
+
         self::assertEquals($car->brand(), $response['brand']);
         self::assertEquals($car->model(), $response['model']);
     }

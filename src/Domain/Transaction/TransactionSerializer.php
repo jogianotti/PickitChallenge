@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Transaction;
-
-use App\Domain\Transaction\Transaction;
+namespace App\Domain\Transaction;
 
 class TransactionSerializer
 {

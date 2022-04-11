@@ -2,10 +2,10 @@
 
 namespace App\Tests\Api\Car;
 
+use App\Domain\Car\CarSerializer;
+use App\Domain\Owner\OwnerSerializer;
 use App\Tests\Domain\Car\CarMother;
-use App\Tests\Domain\Car\CarSerializer;
 use App\Tests\Domain\Owner\OwnerMother;
-use App\Tests\Domain\Owner\OwnerSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CarOwnerPutTest extends WebTestCase

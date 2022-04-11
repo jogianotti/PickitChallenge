@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Car;
-
-use App\Domain\Car\Car;
+namespace App\Domain\Car;
 
 final class CarSerializer
 {

@@ -3,10 +3,10 @@
 namespace App\Api\Car;
 
 use App\Domain\Car\CarFinder;
+use App\Domain\Car\CarSerializer;
 use App\Domain\Shared\EntityNotFoundException;
 use App\Domain\Shared\InvalidArgumentException;
 use App\Domain\Shared\Uuid;
-use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,10 +2,10 @@
 
 namespace App\Tests\Api\Transaction;
 
+use App\Domain\Car\CarSerializer;
+use App\Domain\Transaction\TransactionSerializer;
 use App\Tests\Domain\Car\CarMother;
-use App\Tests\Domain\Car\CarSerializer;
 use App\Tests\Domain\Transaction\TransactionMother;
-use App\Tests\Domain\Transaction\TransactionSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TransactionPostTest extends WebTestCase

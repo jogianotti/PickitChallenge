@@ -2,8 +2,8 @@
 
 namespace App\Tests\Api\Owner;
 
+use App\Domain\Owner\OwnerSerializer;
 use App\Tests\Domain\Owner\OwnerMother;
-use App\Tests\Domain\Owner\OwnerSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class OwnerPostTest extends WebTestCase

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Api\Car;
 
+use App\Domain\Car\CarSerializer;
 use App\Tests\Domain\Car\CarMother;
-use App\Tests\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CarDeleteTest extends WebTestCase

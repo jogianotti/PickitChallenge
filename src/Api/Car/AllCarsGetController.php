@@ -3,7 +3,7 @@
 namespace App\Api\Car;
 
 use App\Domain\Car\AllCarsFinder;
-use App\Tests\Domain\Car\CarSerializer;
+use App\Domain\Car\CarSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
