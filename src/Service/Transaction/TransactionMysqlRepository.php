@@ -40,7 +40,7 @@ class TransactionMysqlRepository extends ServiceEntityRepository implements Tran
     {
         return $this->findOneBy([
             "car" => $car->uuid()->value(),
-            "id" => $id,
+            "uuid" => $id,
         ]);
     }
 

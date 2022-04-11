@@ -4,6 +4,7 @@ namespace App\Tests\Service\Transaction;
 
 use App\Domain\Transaction\Transaction;
 use App\Service\Transaction\TransactionMysqlRepository;
+use App\Tests\Domain\Car\CarMother;
 use App\Tests\Domain\Transaction\TransactionMother;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -14,36 +15,44 @@ class TransactionMysqlRepositoryTest extends KernelTestCase
 
     public function testItShouldSaveTransaction(): void
     {
+        $car = CarMother::create();
         $transaction = TransactionMother::create();
+        $transaction->setCar($car);
 
         $this->transactionMysqlRepository->save($transaction);
-        $savedTransaction = $this->transactionMysqlRepository->one($transaction->uuid()->value());
+        $savedTransaction = $this->transactionMysqlRepository->one($car, $transaction->uuid()->value());
 
         self::assertEquals($transaction, $savedTransaction);
     }
 
     public function testItShouldRemoveTransaction(): void
     {
+        $car = CarMother::create();
         $transaction = TransactionMother::create();
+        $transaction->setCar($car);
 
         $this->transactionMysqlRepository->save($transaction);
         $this->transactionMysqlRepository->delete($transaction);
-        $deletedTransaction = $this->transactionMysqlRepository->one($transaction->uuid()->value());
+        $deletedTransaction = $this->transactionMysqlRepository->one($car, $transaction->uuid()->value());
 
         self::assertNull($deletedTransaction);
     }
 
     public function testItShouldFindAllTransactions(): void
     {
-        $this->transactionMysqlRepository->save(TransactionMother::create());
-        $this->transactionMysqlRepository->save(TransactionMother::create());
-        $this->transactionMysqlRepository->save(TransactionMother::create());
-        $this->transactionMysqlRepository->save(TransactionMother::create());
+        $car = CarMother::create();
+        $count = random_int(min: 1, max: 10);
 
-        $transactions = $this->transactionMysqlRepository->all(4, 0);
+        for ($i = 0; $i < $count; $i++) {
+            $transaction = TransactionMother::create();
+            $transaction->setCar($car);
+            $this->transactionMysqlRepository->save($transaction);
+        }
+
+        $transactions = $this->transactionMysqlRepository->all($car, limit: $count, offset: 0);
 
         self::assertIsArray($transactions);
-        self::assertCount(4, $transactions);
+        self::assertCount($count, $transactions);
         self::assertInstanceOf(Transaction::class, current($transactions));
     }
 

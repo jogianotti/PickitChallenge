@@ -26,7 +26,7 @@ class Transaction
     #[ORM\Column(type: Types::ARRAY)]
     private array $services;
 
-    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: "transactions")]
+    #[ORM\ManyToOne(targetEntity: Car::class, cascade: [ "persist" ], inversedBy: "transactions")]
     private Car $car;
 
     public function __construct(Uuid $uuid)
