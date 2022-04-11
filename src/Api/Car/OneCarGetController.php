@@ -21,7 +21,7 @@ class OneCarGetController extends AbstractController
             $uuid = new Uuid($id);
             $car = $carFinder($uuid);
 
-            return new JsonResponse(CarSerializer::toJson($car));
+            return new JsonResponse(CarSerializer::toArray($car));
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(
                 data: [
